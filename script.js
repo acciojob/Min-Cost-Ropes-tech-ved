@@ -1,32 +1,24 @@
-function mincost(arr)
-{ 
-//write your code here
-	function mincost(arr) {
-  if (arr.length <= 1) return 0;
+function binarySearch(arr, target) {
+  let left = 0;
+  let right = arr.length - 1;
 
-  let cost = 0;
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
 
-  // Sort ascending
-  arr.sort((a, b) => a - b);
+    if (arr[mid] === target) {
+      return {
+        message: `Element found at index ${mid}`
+      };
+    }
 
-  while (arr.length > 1) {
-    // Take two smallest
-    let first = arr.shift();
-    let second = arr.shift();
-
-    let sum = first + second;
-    cost += sum;
-
-    // Push back and re-sort
-    arr.push(sum);
-    arr.sort((a, b) => a - b);
+    if (arr[mid] < target) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
   }
 
-  return cost;
+  return {
+    message: "Element not found"
+  };
 }
-
-// return the min cost
-  
-}
-
-module.exports=mincost;
