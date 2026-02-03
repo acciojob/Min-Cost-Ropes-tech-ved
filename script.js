@@ -1,24 +1,26 @@
-function binarySearch(arr, target) {
-  let left = 0;
-  let right = arr.length - 1;
+function mincost(arr) {
+  if (arr.length <= 1) return 0;
 
-  while (left <= right) {
-    let mid = Math.floor((left + right) / 2);
+  let cost = 0;
 
-    if (arr[mid] === target) {
-      return {
-        message: `Element found at index ${mid}`
-      };
+  // Make a copy and sort
+  let ropes = arr.slice().sort((a, b) => a - b);
+
+  while (ropes.length > 1) {
+    // Take two smallest
+    let first = ropes.shift();
+    let second = ropes.shift();
+
+    let sum = first + second;
+    cost += sum;
+
+    // Insert sum back in sorted order
+    let i = 0;
+    while (i < ropes.length && ropes[i] < sum) {
+      i++;
     }
-
-    if (arr[mid] < target) {
-      left = mid + 1;
-    } else {
-      right = mid - 1;
-    }
+    ropes.splice(i, 0, sum);
   }
 
-  return {
-    message: "Element not found"
-  };
+  return cost;
 }
